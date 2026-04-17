@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notebook Photo Box</title>
+    <title>made with love.</title>
     <style>
         * {
             margin: 0;
@@ -12,67 +12,65 @@
         }
 
         body {
-            display: flex;
-            height: 100vh;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
             font-family: 'Courier New', monospace;
+            background: #2a2a2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .photobook {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Spiral Binding */
+        .spiral-binding {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            background: linear-gradient(90deg, transparent 0%, #333 10%, #333 90%, transparent 100%);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .spiral-ring {
+            position: absolute;
+            left: 50%;
+            width: 28px;
+            height: 16px;
+            border: 3px solid #444;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at 30% 30%, #555, #222);
+        }
+
+        /* Page 1 - Left Side */
+        .page-1 {
+            flex: 1;
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8e8e3 100%);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
             overflow: hidden;
         }
 
-        /* Spiral Notebook Binding */
-        .binding {
-            position: absolute;
-            left: 49.5%;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%);
-            z-index: 10;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .binding::before,
-        .binding::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: radial-gradient(circle at 30% 30%, #666, #222);
-            border-radius: 50%;
-            left: 2px;
-        }
-
-        .binding::before {
-            top: 15%;
-        }
-
-        .binding::after {
-            bottom: 15%;
-        }
-
-        /* Pages Container */
-        .pages-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        .page {
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(135deg, #fefef8 0%, #f9f9f0 100%);
-            padding: 60px 50px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        /* Paper texture */
-        .page::before {
+        .page-1::before {
             content: '';
             position: absolute;
             top: 0;
@@ -80,161 +78,94 @@
             right: 0;
             bottom: 0;
             background-image: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0,0,0,.03) 2px,
-                    rgba(0,0,0,.03) 4px
-                );
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
             pointer-events: none;
         }
 
-        #page1 {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        }
-
-        #page1.turn {
-            clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-            opacity: 0;
-        }
-
-        #page2 {
-            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-            opacity: 0;
-        }
-
-        #page2.visible {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            opacity: 1;
-        }
-
-        /* Page 1 Content */
-        .page1-content {
+        .page-1-content {
             position: relative;
-            z-index: 5;
-            text-align: center;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
         }
 
-        .date {
-            color: #666;
+        .date-text {
             font-size: 18px;
-            margin-bottom: 40px;
-            letter-spacing: 3px;
+            color: #333;
+            letter-spacing: 2px;
+            font-weight: 300;
         }
 
         .made-with-love {
-            font-size: 48px;
-            font-weight: bold;
-            color: #000;
+            font-size: 24px;
+            color: #333;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            display: inline-block;
-            letter-spacing: 4px;
+            padding: 15px 25px;
+            border: 2px solid transparent;
+            font-style: italic;
+            letter-spacing: 1px;
         }
 
         .made-with-love:hover {
-            color: #e74c3c;
             transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
-        }
-
-        .heart {
-            display: inline-block;
-            color: #e74c3c;
-            animation: heartbeat 0.6s infinite;
-            margin: 0 5px;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            color: #000;
+            border: 2px solid #333;
+            border-radius: 4px;
         }
 
         .signature {
-            margin-top: 100px;
-            color: #999;
             font-size: 14px;
+            color: #555;
             letter-spacing: 2px;
+            font-style: italic;
         }
 
-        /* Page 2 - Carousel */
-        #page2 {
-            justify-content: flex-start;
-            padding-top: 80px;
+        /* Page 2 - Right Side */
+        .page-2 {
+            flex: 1;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
             overflow: hidden;
         }
 
         .carousel-container {
             position: relative;
-            z-index: 5;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
         }
 
         .carousel {
-            display: flex;
-            animation: scroll 20s linear infinite;
-            gap: 20px;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-250%);
-            }
-        }
-
-        .carousel:hover {
-            animation-play-state: paused;
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         .photo-item {
-            flex-shrink: 0;
-            width: 220px;
-            height: 280px;
-            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
-            border: 8px solid #fff;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.15),
-                0 0 0 1px rgba(0, 0, 0, 0.1);
-            transform: perspective(1000px) rotateY(var(--rotate, 0deg)) rotateZ(var(--tilt, 0deg));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #999;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .photo-item:nth-child(1) { --rotate: -5deg; --tilt: -2deg; }
-        .photo-item:nth-child(2) { --rotate: 3deg; --tilt: 1deg; }
-        .photo-item:nth-child(3) { --rotate: -2deg; --tilt: -3deg; }
-        .photo-item:nth-child(4) { --rotate: 4deg; --tilt: 2deg; }
-        .photo-item:nth-child(5) { --rotate: -3deg; --tilt: -1deg; }
-        .photo-item:nth-child(6) { --rotate: 2deg; --tilt: 3deg; }
-        .photo-item:nth-child(7) { --rotate: -4deg; --tilt: 0deg; }
-        .photo-item:nth-child(8) { --rotate: 5deg; --tilt: -2deg; }
-        .photo-item:nth-child(9) { --rotate: -1deg; --tilt: 1deg; }
-        .photo-item:nth-child(10) { --rotate: 3deg; --tilt: 2deg; }
-
-        .photo-item::before {
-            content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            opacity: 0;
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+            width: 280px;
+            height: 380px;
+            background: #333;
+            border: 3px solid #f5f5f0;
+            border-radius: 2px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            animation: photoCarousel 8s infinite ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
         }
 
         .photo-item img {
@@ -243,92 +174,140 @@
             object-fit: cover;
         }
 
-        /* Back button */
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            right: 30px;
-            background: #e74c3c;
-            color: white;
+        @keyframes photoCarousel {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotateZ(-15deg) scale(0.8);
+            }
+            15% {
+                opacity: 1;
+                transform: translateX(0) rotateZ(0deg) scale(1);
+            }
+            85% {
+                opacity: 1;
+                transform: translateX(0) rotateZ(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100px) rotateZ(15deg) scale(0.8);
+            }
+        }
+
+        .photo-item:nth-child(1) { animation-delay: 0s; }
+        .photo-item:nth-child(2) { animation-delay: 1.6s; }
+        .photo-item:nth-child(3) { animation-delay: 3.2s; }
+        .photo-item:nth-child(4) { animation-delay: 4.8s; }
+        .photo-item:nth-child(5) { animation-delay: 6.4s; }
+
+        /* Navigation */
+        .nav-button {
+            position: absolute;
+            bottom: 30px;
+            background: none;
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
             cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            z-index: 15;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
+            font-size: 24px;
+            color: #888;
+            transition: color 0.3s ease;
+            z-index: 10;
         }
 
-        .back-btn.show {
-            opacity: 1;
-            pointer-events: all;
+        .nav-button:hover {
+            color: #fff;
         }
 
-        .back-btn:hover {
-            background: #c0392b;
-            transform: scale(1.1);
+        .nav-button.left {
+            left: 30px;
+        }
+
+        .nav-button.right {
+            right: 30px;
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .photobook {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .page-1, .page-2 {
+                min-height: 500px;
+            }
+
+            .spiral-binding {
+                width: 100%;
+                height: 40px;
+                left: 0;
+                transform: none;
+            }
+
+            .spiral-ring {
+                top: 50%;
+                width: 16px;
+                height: 28px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="photobook">
+        <!-- Spiral Binding -->
+        <div class="spiral-binding" id="spiralBinding"></div>
 
-    <div class="binding"></div>
-
-    <div class="pages-container">
         <!-- Page 1 -->
-        <div class="page" id="page1">
-            <div class="page1-content">
-                <div class="date">07.17.1996</div>
-                <div class="made-with-love" id="transitionBtn">
-                    made with <span class="heart">❤</span> love
+        <div class="page-1" id="page1">
+            <div class="page-1-content">
+                <div class="date-text">07.17.1996</div>
+                <div 
+                    class="made-with-love" 
+                    onclick="document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.remove('hidden');"
+                >
+                    made with love
                 </div>
-                <div class="signature">— wonderland</div>
+                <div class="signature">love-notes</div>
             </div>
         </div>
 
         <!-- Page 2 -->
-        <div class="page" id="page2">
+        <div class="page-2 hidden" id="page2">
             <div class="carousel-container">
                 <div class="carousel">
-                    <div class="photo-item">📷 Photo 1</div>
-                    <div class="photo-item">📷 Photo 2</div>
-                    <div class="photo-item">📷 Photo 3</div>
-                    <div class="photo-item">📷 Photo 4</div>
-                    <div class="photo-item">📷 Photo 5</div>
-                    <!-- Repeated for infinite effect -->
-                    <div class="photo-item">📷 Photo 1</div>
-                    <div class="photo-item">📷 Photo 2</div>
-                    <div class="photo-item">📷 Photo 3</div>
-                    <div class="photo-item">📷 Photo 4</div>
-                    <div class="photo-item">📷 Photo 5</div>
+                    <div class="photo-item">
+                        <img src="photo1.jpg" alt="Photo 1" onerror="this.textContent='photo1.jpg'">
+                    </div>
+                    <div class="photo-item">
+                        <img src="photo2.jpg" alt="Photo 2" onerror="this.textContent='photo2.jpg'">
+                    </div>
+                    <div class="photo-item">
+                        <img src="photo3.jpg" alt="Photo 3" onerror="this.textContent='photo3.jpg'">
+                    </div>
+                    <div class="photo-item">
+                        <img src="photo4.jpg" alt="Photo 4" onerror="this.textContent='photo4.jpg'">
+                    </div>
+                    <div class="photo-item">
+                        <img src="photo5.jpg" alt="Photo 5" onerror="this.textContent='photo5.jpg'">
+                    </div>
                 </div>
             </div>
+            <button class="nav-button left" onclick="document.getElementById('page2').classList.add('hidden'); document.getElementById('page1').classList.remove('hidden');">← back</button>
         </div>
     </div>
 
-    <button class="back-btn" id="backBtn">← Back</button>
-
     <script>
-        const transitionBtn = document.getElementById('transitionBtn');
-        const page1 = document.getElementById('page1');
-        const page2 = document.getElementById('page2');
-        const backBtn = document.getElementById('backBtn');
-
-        transitionBtn.addEventListener('click', () => {
-            page1.classList.add('turn');
-            page2.classList.add('visible');
-            backBtn.classList.add('show');
-        });
-
-        backBtn.addEventListener('click', () => {
-            page1.classList.remove('turn');
-            page2.classList.remove('visible');
-            backBtn.classList.remove('show');
-        });
+        // Generate spiral rings
+        const spiralBinding = document.getElementById('spiralBinding');
+        for (let i = 0; i < 15; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'spiral-ring';
+            ring.style.top = (i * 40) + 'px';
+            spiralBinding.appendChild(ring);
+        }
     </script>
-
 </body>
 </html>
